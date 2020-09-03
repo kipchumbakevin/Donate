@@ -20,16 +20,9 @@
         android:layout_width="match_parent"
         android:layout_marginTop="30dp"
         android:layout_height="wrap_content"
-        android:text="Have you ever slept on an empty stomach?\nHave you ever been kicked out of your room?\n
-        \nWell, that's the situation
-my friend is currently facing. I am also struggling with life,thus not able to help on my own.\n
-\nI decided to build a simple application and use this platform to reach willing donors across the world.\n
-\nIf we can get a thousand people donating $1 each, we will improve the life of my struggling friend.\n
-\nPlease help me help a brother.\n\nNB: No amount is considered small. Together we can achieve.\n
-\n
-Thank you."
+        android:text=""
         android:textSize="15sp"
-
+        android:id="@+id/mess"
         android:textColor="@color/colorGray"
         android:textStyle="bold"/>
 
@@ -72,6 +65,13 @@ Thank you."
         android:layout_height="wrap_content"
         android:text="Donate"
         android:layout_gravity="bottom|end"/>
-
+    <ImageView
+        android:id="@+id/menu"
+        android:src="@drawable/ic_more"
+        android:layout_marginBottom="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"/>
     <include layout="@layout/bottom_sheet"/>
+    <include layout="@layout/menu"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
