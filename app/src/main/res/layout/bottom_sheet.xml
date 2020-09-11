@@ -48,27 +48,15 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="30dp"
                 android:src="@drawable/ll"/>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_marginStart="5dp"
                     android:textSize="15sp"
+                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorGray"
                     android:text="M-Pesa Number"/>
-                <TextView
-                    android:id="@+id/mpesa_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="0706459189"
-                    android:textSize="15sp"
-                    android:textColor="@color/colorGray"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -96,34 +84,14 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="30dp"
                 android:src="@drawable/ll"/>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
                 <TextView
                     android:textColor="@color/colorGray"
                     android:layout_width="wrap_content"
                     android:layout_marginStart="5dp"
                     android:textSize="15sp"
+                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:text="M-Pesa Paybill:"/>
-                <TextView
-                    android:id="@+id/mpesa_paybill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Paybill: 955520"
-                    android:textSize="15sp"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/colorGray"/>
-                <TextView
-                    android:id="@+id/mpesa_paybillaccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textSize="15sp"
-                    android:textColor="@color/colorGray"
-                    android:text="Account: mchango"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:text="M-Pesa Paybill"/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -150,28 +118,15 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="24dp"
                 android:src="@drawable/card"/>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_vertical"
                     android:textSize="15sp"
                     android:textColor="@color/colorGray"
-                    android:text="Bank Account Number"/>
-                <TextView
-                    android:id="@+id/bank_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="131016873215"
-                    android:textSize="15sp"
-                    android:textColor="@color/colorGray"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:text="Credit Card"/>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
         <View
             android:layout_width="match_parent"
@@ -195,28 +150,15 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="25dp"
                 android:src="@drawable/paypal"/>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_vertical"
                     android:textSize="15sp"
                     android:textColor="@color/colorGray"
                     android:text="PayPal"/>
-                <TextView
-                    android:id="@+id/paypal_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="kipchukevoo@gmail.com"
-                    android:textSize="15sp"
-                    android:textColor="@color/colorGray"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <View

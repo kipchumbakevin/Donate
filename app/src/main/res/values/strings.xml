@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Donate</string>
+    <string name="SHARED_PREFERENCES">com.donate.donate.utils.sharedpref</string>
+    <string name="CLIENTS_PHONE">com.donate.donate.utils.sharedpref.phone</string>
+    //
+    <string name="CLIENTS_NAME">com.fundraiser.fundraiser.utils.sharedpref.name</string>
 </resources>

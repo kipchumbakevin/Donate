@@ -74,4 +74,5 @@
         android:layout_gravity="bottom|end"/>
     <include layout="@layout/bottom_sheet"/>
     <include layout="@layout/menu"/>
+    <include layout="@layout/enter_phone"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

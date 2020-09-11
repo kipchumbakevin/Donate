@@ -1,11 +1,11 @@
 package com.donate.donate;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
-
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,22 +13,28 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.donate.donate.utils.SharedPreferencesConfig;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
+import com.hbb20.CountryCodePicker;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     Button donate;
-    LinearLayoutCompat linearLayoutCompat,mpesaNo,payBill,bank,paypal,menuu;
+    LinearLayoutCompat linearLayoutCompat,mpesaNo,payBill,bank,paypal,menuu,enterPhoneBottom;
     RelativeLayout relativeLayout;
-    BottomSheetBehavior bottomSheetBehavior,bottommenu;
+    BottomSheetBehavior bottomSheetBehavior,bottommenu,enterPSheet;
     ImageView menu;
-    TextView share,policy,message;
+    EditText enter_phone_no;
+    CountryCodePicker ccp;
+    TextView share,policy,message,submit;
+    SharedPreferencesConfig sharedPreferencesConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,18 +45,34 @@ public class MainActivity extends AppCompatActivity {
         bank = findViewById(R.id.linear_bank);
         paypal = findViewById(R.id.linear_paypal);
         relativeLayout = findViewById(R.id.rela);
+        enter_phone_no  =findViewById(R.id.enterPhone);
+        ccp = findViewById(R.id.ccp);
         share = findViewById(R.id.share);
+        submit = findViewById(R.id.submit);
         policy = findViewById(R.id.policy);
+        enterPhoneBottom = findViewById(R.id.enterPhoneBottom);
+        sharedPreferencesConfig = new SharedPreferencesConfig(MainActivity.this);
         message = findViewById(R.id.mess);
         menu = findViewById(R.id.menu);
         menuu = findViewById(R.id.menuu);
         linearLayoutCompat = findViewById(R.id.bottom);
         bottomSheetBehavior = BottomSheetBehavior.from(linearLayoutCompat);
         bottommenu = BottomSheetBehavior.from(menuu);
+        enterPSheet = BottomSheetBehavior.from(enterPhoneBottom);
+        ccp.registerCarrierNumberEditText(enter_phone_no);
+
+        if (sharedPreferencesConfig.readClientsPhone().isEmpty()){
+            enterPSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                if (sharedPreferencesConfig.readClientsPhone().isEmpty()){
+                    enterPSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
             }
         });
         setText("Have you ever slept on an empty stomach?\nHave you ever been kicked out of your room?\n\n" +
@@ -71,12 +93,27 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        payBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                Intent intent = new Intent(MainActivity.this,MpesaActivity.class);
+                startActivity(intent);
+            }
+        });
         bank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 Intent intent = new Intent(MainActivity.this,CreditCard.class);
                 startActivity(intent);
+            }
+        });
+        mpesaNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                mpesaPhone();
             }
         });
         share.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bottommenu.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                Uri uri = Uri.parse("https://www.lovidovi.co.ke/ealoanspolicy");
+                Uri uri = Uri.parse("https://www.lovidovi.co.ke/donatepolicy");
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                 // To count with Play market backstack, After pressing back button,
                 // to taken back to our application, we need to add following flags to intent.
@@ -108,26 +145,46 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(goToMarket);
                 } catch (ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://www.lovidovi.co.ke/ealoanspolicy")));
+                            Uri.parse("https://www.lovidovi.co.ke/donatepolicy")));
+                }
+            }
+        });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (enter_phone_no.getText().toString().isEmpty()){
+                    Toast.makeText(MainActivity.this,"Enter your phone number",Toast.LENGTH_SHORT).show();
+                }if (!ccp.isValidFullNumber()){
+                    Toast.makeText(MainActivity.this,"Enter a valid phone number",Toast.LENGTH_SHORT).show();
+                }else {
+                    String phone = ccp.getFullNumberWithPlus();
+                    sharedPreferencesConfig.saveAuthenticationInformation(phone);
+                    enterPSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    Toast.makeText(MainActivity.this,"Number saved, please proceed",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    private void mpesaPhone() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.mphone,null);
+        alert.setView(view);
+        AlertDialog alertDialog = alert.create();
+        alertDialog.show();
+    }
+
     public void setText(final String s){
         final int[]i = new int[1];
-        i[0] = 0;
         final int length = s.length();
         @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (s!=null){
                     char c = s.charAt(i[0]);
                     message.append(String.valueOf(c));
-                }
+                    i[0]++;
 
-                i[0]++;
             }
         };
         final Timer timer = new Timer();
@@ -140,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        timer.schedule(taskEverySplitSecond,1,10);
+        timer.schedule(taskEverySplitSecond,1,20);
     }
     @Override
     public void onBackPressed() {

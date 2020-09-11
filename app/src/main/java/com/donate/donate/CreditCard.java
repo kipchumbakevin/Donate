@@ -22,6 +22,8 @@ public class CreditCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credit_card);
         cardForm = findViewById(R.id.card_form);
+
+
         buy = findViewById(R.id.btnbuy);
         cardForm.cardRequired(true)
                 .expirationRequired(true)
@@ -46,7 +48,8 @@ public class CreditCard extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
-                            Toast.makeText(CreditCard.this,"Thank you for donating",Toast.LENGTH_SHORT).show();
+                            String ss = cardForm.getCountryCode()+cardForm.getMobileNumber();
+                            Toast.makeText(CreditCard.this,"Thank you for donating "+ss,Toast.LENGTH_SHORT).show();
                         }
                     })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -55,7 +58,6 @@ public class CreditCard extends AppCompatActivity {
                                     dialogInterface.dismiss();
                                 }
                             });
-
                     AlertDialog alertDialog = alert.create();
                     alertDialog.show();
                 }

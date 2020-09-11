@@ -27,6 +27,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //ccp
+    implementation 'com.hbb20:ccp:2.4.0'
     //paypal sdk
     implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
     //card
