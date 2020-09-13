@@ -13,8 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MpesaActivity"
+        <activity android:name=".Casino"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".MpesaActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DonationOptions"
             android:theme="@style/AppTheme.NoActionBar" />

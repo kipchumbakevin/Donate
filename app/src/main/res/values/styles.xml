@@ -13,4 +13,9 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/colorDont</item>
     </style>
+    <style name="MDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">#ffffff</item>
+        <item name="android:background">@color/colorDont</item>
+        <item name="dialogCornerRadius">30dp</item>
+    </style>
 </resources>

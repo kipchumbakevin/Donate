@@ -223,8 +223,7 @@
         android:layout_marginTop="80dp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/donate">
+        app:layout_constraintBottom_toBottomOf="parent">
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"

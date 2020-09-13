@@ -26,8 +26,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-    Button donate;
-    LinearLayoutCompat linearLayoutCompat,mpesaNo,payBill,bank,paypal,menuu,enterPhoneBottom;
+    LinearLayoutCompat linearLayoutCompat,mpesaNo,payBill,bank,paypal,menuu,enterPhoneBottom,casino;
     RelativeLayout relativeLayout;
     BottomSheetBehavior bottomSheetBehavior,bottommenu,enterPSheet;
     ImageView menu;
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        donate = findViewById(R.id.donate);
         mpesaNo = findViewById(R.id.linear_mpesa_number);
         payBill  =findViewById(R.id.linear_paybill);
         bank = findViewById(R.id.linear_bank);
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout = findViewById(R.id.rela);
         enter_phone_no  =findViewById(R.id.enterPhone);
         ccp = findViewById(R.id.ccp);
+        casino = findViewById(R.id.linear_casino);
         share = findViewById(R.id.share);
         submit = findViewById(R.id.submit);
         policy = findViewById(R.id.policy);
@@ -149,6 +148,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        casino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                Intent intent = new Intent(MainActivity.this,Casino.class);
+                startActivity(intent);
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,8 +174,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mpesaPhone() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this,R.style.MDialogTheme);
         View view = getLayoutInflater().inflate(R.layout.mphone,null);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
         alert.setView(view);
         AlertDialog alertDialog = alert.create();
         alertDialog.show();

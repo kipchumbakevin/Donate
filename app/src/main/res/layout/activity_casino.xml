@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorDont"
+    android:padding="20dp"
+    android:layout_height="match_parent"
+    tools:context=".Casino">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/rela"
+            android:padding="10dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:text="Your Pick"/>
+        <Spinner
+            android:layout_below="@id/v"
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+        <TextView
+            android:id="@+id/vv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:text="Result"/>
+        <TextView
+            android:layout_below="@id/vv"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="#000"
+            android:id="@+id/textview"/>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/roul"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:adjustViewBounds="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/kkkick"/>
+
+        <ImageView
+            android:id="@+id/nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="196dp"
+            android:src="@drawable/ic_navigation" />
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="START"
+            android:layout_below="@id/roul"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="10dp"
     android:background="@color/colorDont"
     android:layout_height="wrap_content">
 
@@ -27,9 +26,8 @@
     <TextView
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="55dp"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
         android:textSize="10sp"
         android:textColor="@color/colorWhite"
         android:text="Calls to this number have been disabled"/>
