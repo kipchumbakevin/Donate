@@ -1,32 +1,52 @@
 package com.donate.donate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.donate.donate.models.MessageModel;
+import com.donate.donate.models.TrialsModel;
+import com.donate.donate.networking.RetrofitClient;
+import com.donate.donate.utils.SharedPreferencesConfig;
+
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Casino extends AppCompatActivity {
 
     int degree = 0,degree_old = 0;
     Random r;
-    Button start;
-    TextView textView;
+    Button start,button_deposit;
+    EditText deposit_amount;
+    LinearLayoutCompat linear_deposit;
+    TextView textView,chances;
     ImageView selected,imageRoul;
     Spinner spinner;
+    ProgressBar pr;
+    SharedPreferencesConfig sharedPreferencesConfig;
     private static final float FACTOR = 4.86f;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +55,18 @@ public class Casino extends AppCompatActivity {
         start = findViewById(R.id.start);
         imageRoul = findViewById(R.id.roul);
         textView = findViewById(R.id.textview);
+        chances = findViewById(R.id.chances);
+        pr = findViewById(R.id.pr);
         selected = findViewById(R.id.nav);
+        sharedPreferencesConfig = new SharedPreferencesConfig(this);
+        linear_deposit = findViewById(R.id.linear_deposit);
+        deposit_amount = findViewById(R.id.deposit_amount);
+        button_deposit = findViewById(R.id.deposit_button);
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence>adapter = ArrayAdapter.createFromResource(this,R.array.numbers,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        populatetrials();
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -53,41 +80,160 @@ public class Casino extends AppCompatActivity {
         });
         r = new Random();
 
+        button_deposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (deposit_amount.getText().toString().isEmpty()){
+                    Toast.makeText(Casino.this,"The minimum amount to deposit is Ksh.20",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    int ii = Integer.parseInt(deposit_amount.getText().toString());
+                    String phone = sharedPreferencesConfig.readClientsPhone();
+                    String am = deposit_amount.getText().toString();
+                    if (ii >= 20) {
+                        pr.setVisibility(View.VISIBLE);
+                        Call<MessageModel> call = RetrofitClient.getInstance(Casino.this)
+                                .getApiConnector()
+                                .casiN(phone,am);
+                        call.enqueue(new Callback<MessageModel>() {
+                            @Override
+                            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                                pr.setVisibility(View.GONE);
+                                if (response.isSuccessful()) {
+                                    populatetrials();
+                                    View viewv = Casino.this.getCurrentFocus();
+                                    if (viewv != null) {
+                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        imm.hideSoftInputFromWindow(viewv.getWindowToken(), 0);
+                                    }
+                                    linear_deposit.setVisibility(View.GONE);
+                                    deposit_amount.getText().clear();
+                                } else {
+                                    Toast.makeText(Casino.this, "Server error", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<MessageModel> call, Throwable t) {
+                                pr.setVisibility(View.GONE);
+                                Toast.makeText(Casino.this, "Network error", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(Casino.this, "The minimum amount to deposit is Ksh.20", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                degree_old = degree % 360;
-                degree = r.nextInt(3600) + 720;
-                RotateAnimation rotate = new RotateAnimation(degree_old,degree,
-                        RotateAnimation.RELATIVE_TO_SELF,0.5f,RotateAnimation.RELATIVE_TO_SELF,0.5f);
-                rotate.setDuration(3600);
-                rotate.setFillAfter(true);
-                rotate.setInterpolator(new DecelerateInterpolator());
-                rotate.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        textView.setText("");
-                        start.setVisibility(View.GONE);
-                        spinner.setEnabled(false);
-                    }
+                final int num = Integer.parseInt(chances.getText().toString());
+                if (num>0){
+                    linear_deposit.setVisibility(View.GONE);
+                    degree_old = degree % 360;
+                    degree = r.nextInt(3600) + 720;
+                    RotateAnimation rotate = new RotateAnimation(degree_old,degree,
+                            RotateAnimation.RELATIVE_TO_SELF,0.5f,RotateAnimation.RELATIVE_TO_SELF,0.5f);
+                    rotate.setDuration(3600);
+                    rotate.setFillAfter(true);
+                    rotate.setInterpolator(new DecelerateInterpolator());
+                    rotate.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            reduceTrials();
+                            textView.setText("-");
+                            start.setVisibility(View.GONE);
+                            chances.setText(String.valueOf(num-1));
+                            spinner.setEnabled(false);
 
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        textView.setText(currentNumber(360-(degree % 360)));
-                        start.setVisibility(View.VISIBLE);
-                        spinner.setEnabled(true);
-                    }
+                        }
 
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            textView.setText(currentNumber(360-(degree % 360)));
+                            start.setVisibility(View.VISIBLE);
+                            spinner.setEnabled(true);
+                        }
 
-                    }
-                });
-                imageRoul.startAnimation(rotate);
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    imageRoul.startAnimation(rotate);
+                }
+                else {
+                    linear_deposit.setVisibility(View.VISIBLE);
+                    Toast.makeText(Casino.this,"You have finished your trials,deposit to continue",Toast.LENGTH_SHORT).show();
+                }
+                }
+
+        });
+    }
+
+    private void reduceTrials() {
+        String phone = sharedPreferencesConfig.readClientsPhone();
+        Call<MessageModel> call = RetrofitClient.getInstance(Casino.this)
+                .getApiConnector()
+                .reduceT(phone);
+        call.enqueue(new Callback<MessageModel>() {
+            @Override
+            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                pr.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                } else {
+                    //Toast.makeText(Casino.this, "Server error", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MessageModel> call, Throwable t) {
+                pr.setVisibility(View.GONE);
+                //Toast.makeText(Casino.this, "Network error", Toast.LENGTH_LONG).show();
             }
         });
-
     }
+
+    private void populatetrials() {
+        pr.setVisibility(View.VISIBLE);
+        start.setEnabled(false);
+        String phone = sharedPreferencesConfig.readClientsPhone();
+        Call<TrialsModel> call = RetrofitClient.getInstance(Casino.this)
+                .getApiConnector()
+                .pTrials(phone);
+        call.enqueue(new Callback<TrialsModel>() {
+            @Override
+            public void onResponse(Call<TrialsModel> call, Response<TrialsModel> response) {
+                pr.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getNum()>=0){
+                        chances.setText(response.body().getNum()+"");
+                        start.setEnabled(true);
+                        linear_deposit.setVisibility(View.GONE);
+                    }else{
+                        chances.setText("-");
+                        linear_deposit.setVisibility(View.VISIBLE);
+                    }
+
+
+                }
+                else {
+                     Toast.makeText(Casino.this,"Server error",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TrialsModel> call, Throwable t) {
+                pr.setVisibility(View.GONE);
+                Toast.makeText(Casino.this,"Network error"+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
     private String currentNumber(int degrees){
         String text = "";
         if (degrees >=(FACTOR * 1)&& degrees < (FACTOR * 3)){

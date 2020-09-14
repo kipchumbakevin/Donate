@@ -15,8 +15,34 @@
             android:layout_width="match_parent"
             android:background="@drawable/rela"
             android:padding="10dp"
+            android:id="@+id/r"
             android:layout_height="wrap_content">
-
+            <ProgressBar
+                android:id="@+id/pr"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:max="100"
+                android:visibility="gone"
+                android:layout_below="@id/spinner"
+                android:progress="50"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:indeterminate="true"/>
+            <TextView
+                android:id="@+id/hh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_centerHorizontal="true"
+                android:textSize="15sp"
+                android:text="Trials"/>
+            <TextView
+                android:id="@+id/chances"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorGreen"
+                android:layout_below="@+id/hh"
+                android:layout_centerHorizontal="true"
+                android:textSize="15sp"/>
         <TextView
             android:id="@+id/v"
             android:layout_width="wrap_content"
@@ -43,6 +69,7 @@
             android:layout_below="@id/vv"
             android:layout_width="wrap_content"
             android:layout_marginTop="1dp"
+            android:text="-"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="#000"
@@ -62,16 +89,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="196dp"
+            android:layout_marginTop="197dp"
             android:src="@drawable/ic_navigation" />
 
         <Button
             android:id="@+id/start"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="START"
+            android:textSize="10sp"
             android:layout_below="@id/roul"
             android:layout_centerHorizontal="true"/>
+        <TextView
+        android:id="@+id/vh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/r"
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp"
+        android:layout_centerHorizontal="true"
+        android:text="Deposit to continue"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_below="@id/vh"
+            android:id="@+id/linear_deposit"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/deposit_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="15sp"
+                android:textColorHint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
+                android:hint="amount"/>
+            <Button
+                android:id="@+id/deposit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginTop="2dp"
+                android:text="deposit"
+                android:layout_marginStart="5dp"
+                android:textSize="10sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

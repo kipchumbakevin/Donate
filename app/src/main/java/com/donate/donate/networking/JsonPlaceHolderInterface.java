@@ -1,6 +1,7 @@
 package com.donate.donate.networking;
 
 import com.donate.donate.models.MessageModel;
+import com.donate.donate.models.TrialsModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -16,5 +17,21 @@ public interface JsonPlaceHolderInterface {
     Call<MessageModel> initiate(
             @Field("phone") String phone,
             @Field("amount") String am
+    );
+    @FormUrlEncoded
+    @POST("api/getcasino")
+    Call<TrialsModel> pTrials(
+            @Field("phone") String phone
+    );
+    @FormUrlEncoded
+    @POST("api/reducetrials")
+    Call<MessageModel> reduceT(
+            @Field("phone") String phone
+    );
+    @FormUrlEncoded
+    @POST("api/insertcasino")
+    Call<MessageModel> casiN(
+            @Field("phone") String phone,
+            @Field("amount") String amount
     );
 }
