@@ -92,23 +92,21 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
-            android:src="@drawable/kkkick" />
-
+            android:src="@drawable/kkkick"/>
         <ImageView
             android:id="@+id/nav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="197dp"
-            android:src="@drawable/ic_navigation" />
-
+            android:layout_marginTop="198dp"
+            android:src="@drawable/ic_navigation"/>
         <Button
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_below="@id/roul"
             android:layout_centerHorizontal="true"
-            android:text="START"
+            android:text="SPIN"
             android:textSize="10sp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -156,6 +154,14 @@
                     android:textSize="10sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:id="@+id/reload"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_autorenew"/>
     </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

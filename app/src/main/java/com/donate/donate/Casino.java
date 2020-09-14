@@ -43,7 +43,7 @@ public class Casino extends AppCompatActivity {
     EditText deposit_amount;
     LinearLayoutCompat linear_deposit;
     TextView textView,chances;
-    ImageView selected,imageRoul;
+    ImageView selected,imageRoul,reload;
     Spinner spinner;
     ProgressBar pr;
     SharedPreferencesConfig sharedPreferencesConfig;
@@ -57,6 +57,7 @@ public class Casino extends AppCompatActivity {
         textView = findViewById(R.id.textview);
         chances = findViewById(R.id.chances);
         pr = findViewById(R.id.pr);
+        reload = findViewById(R.id.reload);
         selected = findViewById(R.id.nav);
         sharedPreferencesConfig = new SharedPreferencesConfig(this);
         linear_deposit = findViewById(R.id.linear_deposit);
@@ -76,6 +77,12 @@ public class Casino extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                populatetrials();
             }
         });
         r = new Random();
@@ -166,7 +173,7 @@ public class Casino extends AppCompatActivity {
                 }
                 else {
                     linear_deposit.setVisibility(View.VISIBLE);
-                    Toast.makeText(Casino.this,"You have finished your trials,deposit to continue",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Casino.this,"You have no trials, deposit to continue",Toast.LENGTH_SHORT).show();
                 }
                 }
 
@@ -200,6 +207,7 @@ public class Casino extends AppCompatActivity {
     private void populatetrials() {
         pr.setVisibility(View.VISIBLE);
         start.setEnabled(false);
+        reload.setVisibility(View.GONE);
         String phone = sharedPreferencesConfig.readClientsPhone();
         Call<TrialsModel> call = RetrofitClient.getInstance(Casino.this)
                 .getApiConnector()
@@ -221,6 +229,7 @@ public class Casino extends AppCompatActivity {
                 }
                 else {
                      Toast.makeText(Casino.this,"Server error",Toast.LENGTH_SHORT).show();
+                     reload.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -228,6 +237,7 @@ public class Casino extends AppCompatActivity {
             public void onFailure(Call<TrialsModel> call, Throwable t) {
                 pr.setVisibility(View.GONE);
                 Toast.makeText(Casino.this,"Network error"+t.getMessage(),Toast.LENGTH_SHORT).show();
+                reload.setVisibility(View.VISIBLE);
             }
 
         });
