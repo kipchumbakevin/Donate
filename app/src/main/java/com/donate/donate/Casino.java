@@ -213,12 +213,11 @@ public class Casino extends AppCompatActivity {
                         chances.setText(response.body().getNum()+"");
                         start.setEnabled(true);
                         linear_deposit.setVisibility(View.GONE);
-                    }else{
+                    }
+                    else{
                         chances.setText("-");
                         linear_deposit.setVisibility(View.VISIBLE);
                     }
-
-
                 }
                 else {
                      Toast.makeText(Casino.this,"Server error",Toast.LENGTH_SHORT).show();
